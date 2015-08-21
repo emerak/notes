@@ -57,4 +57,22 @@ router.get('/noteedit', function(req, res, next) {
   });
 });
 
+router.get('/notedestroy', function(req, res, next) {
+  var note = undefined;
+  if (req.query.key) {
+    note = notes.read(req.query.key);
+  }
+  res.render('notedestroy', {
+    title: note ? note.title : "",
+    notekey: req.query.key,
+    note: note
+  });
+});
+
+router.post('/notedodestroy', function(req, res, next) {
+  console.log(req.body.notekey);
+  notes.destroy(req.body.notekey);
+  res.redirect('/');
+});
+
 module.exports = router;
